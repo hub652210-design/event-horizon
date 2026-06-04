@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "TrackedItem": {
+      "title": "TrackedItem",
+      "description": "A movie or TV series tracked by the user in one of the statuses: watched, watching, plan_to_watch",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "itemId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["movie", "tv"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["watched", "watching", "plan_to_watch"]
+        },
+        "rating": {
+          "type": "integer",
+          "description": "Personal rating 1-10"
+        },
+        "review": {
+          "type": "string",
+          "description": "User review text"
+        },
+        "rewatchCount": {
+          "type": "integer",
+          "description": "How many times rewatched"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "episodeProgress": {
+          "type": "integer"
+        },
+        "seasonProgress": {
+          "type": "integer"
+        },
+        "favoriteScenes": {
+          "type": "array"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "itemId", "title", "type", "status", "updatedAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User preferences and system profile state",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "preferredVibe": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "username", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/tracked/{itemId}": {
+      "schema": "TrackedItem",
+      "description": "User's tracked movies and series"
+    },
+    "/users/{userId}/profile/preference": {
+      "schema": "UserProfile",
+      "description": "User's preferences and personal custom data"
+    }
+  }
+}

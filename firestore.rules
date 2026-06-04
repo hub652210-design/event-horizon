@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Check if user is signed in
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Check if the actor owns the user-resource
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Secured subcollections under /users/{userId}
+    match /users/{userId} {
+      
+      // Enforce lock on direct access to users matching
+      allow read, write: if isOwner(userId);
+
+      // Tracked Movies & Shows
+      match /tracked/{itemId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // User Preferences and Profile Meta
+      match /profile/{preferenceId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}

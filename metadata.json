@@ -1,0 +1,6 @@
+{
+  "name": "Event Horizon",
+  "description": "An ultra-premium movie tracking dashboard featuring an immersive 3D cinematic intro animation where movie posters dynamically orbit and descend into a massive cosmic black hole before launching the tracking dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
